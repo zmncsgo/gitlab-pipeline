@@ -1,0 +1,32 @@
+image: docker:latest
+
+stages:
+  - builds
+  - test
+  - release
+
+variables:
+  IMAGE: $DOCKER_USER/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
+  RELEASE: $DOCKER_USER/$CI_PROJECT_NAME:latest
+
+before_script:
+   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+build:
+  stage: builds
+  tags:
+    - shared_runner
+  script:
+   - cd app && docker build --pull -t $IMAGE .
+   - docker push $IMAGE
+
+release:
+  stage: release
+  tags:
+    - shared_runner
+  script:
+    - docker pull $IMAGE
+    - docker tag $IMAGE $RELEASE
+    - docker push $RELEASE
+  only:
+    - master
