@@ -1,0 +1,10 @@
+gitops:
+ manifest_projects:
+ - id: k8s-conf-demomanifests
+   default_namespace: default
+   paths:
+   - glob: 'deploy.yaml'
+   - glob: 'svc.yaml'
+observability:
+ logging:
+   level: debug
