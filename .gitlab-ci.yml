@@ -33,8 +33,10 @@ release:
     - master
 
 deploy:
-  image: gcr.io/cloud-builders/kubectl:latest
   stage: deploy
+  before_script: 
+    - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.23.7/2022-06-29/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
   tags:
     - shared_runner
   script:
