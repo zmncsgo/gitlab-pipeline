@@ -30,3 +30,13 @@ release:
     - docker push $RELEASE
   only:
     - master
+
+deploy:
+  image: gcr.io/cloud-builders/kubectl:latest
+  stage: deploy
+  script:
+    - kubectl config set-cluster local.eu-wets-2.eksctl.io --server=https://8B791006D6234C320DD77C138EE2E48D.yl4.eu-west-2.eks.amazonaws.com --insecure-skip-tls-verify=true
+    - kubectl config set-credentials gitlab-admin --token=eyJhbGciOiJSUzI1NiIsImtpZCI6Ik5TVzVuS0tQRHM1NEJaeW4tLUFLMEpwQ19hT1hrQjk5Z29DSHNsVXZySmsifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJnaXRsYWItYWRtaW4tdG9rZW4ta3JkZnAiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZ2l0bGFiLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNzY4OGNlYTYtNjM3MS00YTA2LWExODctMTEwMDc2M2ZlMDkzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmdpdGxhYi1hZG1pbiJ9.VCpYFqw7VgMvz4HEGiuw0BbPn0r8T_1-drNjwpAr1DkWP0A5y_QoIXGhgy8-A4V2QYbkIRjtAkQjsRIg1dhBCaZBks0dqT_fU9__PzhCyz3uRhOB6m_cdmyHlj53q4KpqGn4KMWnKwZOejwqwumYOjTax2714QCfoaGtcdk_mo-BMcVCZvrrSWZwUKjlLRPCb6h1ki6bD6_AZuQM0Fw28cNMJDTxUY0YT3sIpPIqOple6bdeNXsH6Iu-8tz39roe3mbrQA1WndfdH9wthwS2QAMFzpCWvxpb89LN6oBbO1cmY79-WbUiziUuVit940ljsKh9cucb9xk7zqEmSDAaoA
+    - kubectl config set-context default --cluster=local.eu-wets-2.eksctl.io --user=gitlab-admin
+    - kubectl config use-context default
+    - kubectl get nodes
