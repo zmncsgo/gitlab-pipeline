@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/handler')
 def handler():
-    return 'OK'
+    return 'SUCCESFULLY DEPLOYED v1'
 
 
 if __name__ == '__main__':
