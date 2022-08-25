@@ -1,25 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp-deployment
-  labels:
-    app: myapp
+  name: myapp
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: myapp
+      run: myapp
   template:
     metadata:
       labels:
-        app: myapp
+        run: myapp
     spec:
       containers:
       - name: myapp
-        image: sfilatov/myapp:v0.0.1
+        image: zamanbek/k8s-conf-demo:latest
         imagePullPolicy: Always
         env:
         - name: HTTP_PORT
-          value: "8082"
+          value: "8081"
         ports:
-        - containerPort: 8082
+        - containerPort: 8081
+      imagePullSecrets:
+      - name: myprivateregistry
