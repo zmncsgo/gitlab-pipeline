@@ -41,13 +41,13 @@ deploy:
   tags:
     - shared_runner
   script:
-    - ./kubectl config set-cluster local.eu-wets-2.eksctl.io --server=$KUBE_URL --insecure-skip-tls-verify=true
+    - ./kubectl config set-cluster local --server=$KUBE_URL --insecure-skip-tls-verify=true
     - ./kubectl config set-credentials gitlab-admin --token=$KUBE_TOKEN
-    - ./kubectl config set-context default --cluster=local.eu-wets-2.eksctl.io --user=gitlab-admin
+    - ./kubectl config set-context default --cluster=local --user=gitlab-admin
     - ./kubectl config use-context default
-    - ./kubectl config view
-    - ./kubectl get nodes
+#    - ./kubectl config view
+#    - ./kubectl get nodes
     - ./kubectl create secret docker-registry myprivateregistry --docker-server=$REGISTRY_URL --docker-username=$DOCKER_USER --docker-password=$DOCKER_PASSWORD --dry-run=client -o yaml | ./kubectl apply -f -
     - ./kubectl apply -f manifests/deployment.yaml
-#   - ./kubectl apply -f manifests/service.yaml
+#    - ./kubectl apply -f manifests/service.yaml
     - ./kubectl rollout restart deployment
