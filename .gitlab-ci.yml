@@ -4,6 +4,7 @@ stages:
   - builds
   - test
   - release
+  - deploy
 
 variables:
   IMAGE: $DOCKER_USER/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
